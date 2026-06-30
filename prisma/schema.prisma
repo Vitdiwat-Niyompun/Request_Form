@@ -1,0 +1,58 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+// ----------------------------------------------------
+// 1. ตารางเดิมของคุณ (ReqAdmin)
+// ----------------------------------------------------
+model ReqAdmin {
+  id        Int       @id(map: "PK_ReqAdmin") @default(autoincrement())
+  NameReq   String?   @db.NVarChar(250)
+  Org       String?   @db.NChar(10)
+  Position  String?   @db.NChar(10)
+  empno     String?   @db.NChar(10)
+  Location  String?   @db.NChar(10)
+  Subject   String?   @db.VarChar(Max)
+  Date      DateTime? @db.Date
+  DateReq   DateTime? @db.DateTime
+  Type_car  String?   @db.NVarChar(50)
+  NumberCar String?   @db.NVarChar(50)
+  Attached  String?   @db.Text
+}
+
+// ----------------------------------------------------
+// 2. ตารางใหม่สำหรับบันทึกแบบฟอร์ม Offsite Work ของคุณ
+// ----------------------------------------------------
+model OffsiteWork {
+  id              Int       @id @default(autoincrement())
+  company         String?
+  documentDate    String?
+  nameTitle       String?
+  fullName        String?
+  position        String?
+  departmentType  String?
+  departmentName  String?
+  employeeId      String?
+  assignedBy      String?
+  location        String?
+  purpose         String?   @db.NVarChar(Max) // รองรับข้อความยาวๆ สำหรับเหตุผล/วัตถุประสงค์
+  startDate       String?
+  startTime       String?
+  endDate         String?
+  endTime         String?
+  mainTravelMode  String?
+  carType         String?
+  carPlate        String?
+  trainType       String?
+  airlineName     String?
+  flightClass     String?
+  attachmentName  String?
+  k2Folio         String?   // เลขอ้างอิงจาก K2
+}
